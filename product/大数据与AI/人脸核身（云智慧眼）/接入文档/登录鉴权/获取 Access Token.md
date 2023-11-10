@@ -5,17 +5,17 @@
 - **每次用户登录时必须重新获取 NONCE ticket。**
 
 ## 请求
-- **请求 URL：**`https://miniprogram-kyc.tencentcloudapi.com/api/oauth2/access_token`
+- **请求 URL：**`https://kyc.qcloud.com/api/oauth2/access_token`
 - **请求方法**：`GET`
 - **请求参数：**
 <table><tbody>
 <tr><th>参数</th><th>说明</th><th>类型</th><th>长度（字节）</th><th>是否必填</th></tr>
 <tr>
 <td>app_id</td>
-<td>业务流程唯一标识，即 wbappid，可参考<a href="https://cloud.tencent.com/document/product/1007/49634"> 获取 WBappid</a>  指引在人脸核身控制台内申请</td><td>	String	</td><td>8</td><td>	是</td></tr>
+<td>业务流程唯一标识，即 WBappid，可参考<a href="https://cloud.tencent.com/document/product/1007/49634"> 获取 WBappid</a>  指引在人脸核身控制台内申请</td><td>   String  </td><td>8</td><td> 是</td></tr>
 <tr>
 <td>secret</td>
-<td>wbappid 对应的密钥，申请 wbappid 时得到，可参考<a href="https://cloud.tencent.com/document/product/1007/49634"> 获取 WBappid</a>  指引在人脸核身控制台内申请</td>
+<td>WBappid 对应的密钥，申请 WBappid 时得到，可参考<a href="https://cloud.tencent.com/document/product/1007/49634"> 获取 WBappid</a>  指引在人脸核身控制台内申请</td>
 <td>String</td>
 <td>64</td>
 <td>是</td>
@@ -37,7 +37,7 @@
 </tbody></table>
 - **请求示例：**
 ```
-https://miniprogram-kyc.tencentcloudapi.com/api/oauth2/access_token?app_id=xxx&secret=xxx&grant_type=client_credential&version=1.0.0
+https://kyc.qcloud.com/api/oauth2/access_token?app_id=xxx&secret=xxx&grant_type=client_credential&version=1.0.0
 ```
 
 ## 响应

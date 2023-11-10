@@ -8,7 +8,7 @@ Windows
 ## 前提条件[](id:Preconditions)
 
 - 已获取远程登录 Windows 实例需要使用实例的管理员帐号和对应的密码。
- - 如果您使用系统默认密码登录实例，请前往 [站内信](https://console.cloud.tencent.com/message) 获取。
+ - 如果您使用系统默认密码登录实例，请前往 [站内信](https://console.cloud.tencent.com/message) （标有：云服务器创建成功字样）获取。
  - 如果您忘记密码，请 [重置实例密码](https://cloud.tencent.com/document/product/213/16566)。
 - 您的云服务器实例已购买公网 IP，且该实例已开通云服务器实例的3389号端口（对于通过快速配置购买的云服务器实例已默认开通）。
 
@@ -29,5 +29,4 @@ Windows
 </dx-alert>
 <img src="https://main.qcloudimg.com/raw/3a9aa79200ace4a6ebd68a6e511a341d.png"/>
 4. 单击**确定**，即可登录到 Windows 实例。
-
 

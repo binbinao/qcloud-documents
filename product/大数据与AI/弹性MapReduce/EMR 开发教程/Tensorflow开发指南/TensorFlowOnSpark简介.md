@@ -5,27 +5,20 @@ TensorFlowOnSpark 为 Apache Hadoop 和 Apache Spark 集群提供了可扩展的
 TensorFlowOnSpark 支持 TensorFlow 进程（计算节点和参数服务节点）之间的直接张量通信。过程到过程的直接通信机制使 TensorFlowOnSpark 程序能够在增加的机器上很轻松的进行扩展。TensorFlowOnSpark 不涉及张量通信中的 Spark 驱动程序，因此实现了与独立 TensorFlow 集群类似的可扩展性。
  
 ## 安装 TensorFlowOnSpark
-1. 进入 EMR [购买页](https://buy.cloud.tencent.com/emr)，选择产品 EMR-2.3.0 版本及以上版本。
-2. 在【可选组件】列表中，勾选 tensorflowonspark 1.4.4 组件。
+1. 进入 EMR [购买页](https://buy.cloud.tencent.com/emr)，选择产品 EMR-2.x.x 版本。
+2. 在**可选组件**列表中，勾选 tensorflowonspark 组件。
 3. tensorflowonspark 默认安装在 `/usr/local/service/tensorflowonspark` 目录下。
->!tensorflowonspark 依赖的组件包含 hive 和 spark，在 tensorflowonspark 的同时也会安装 hive 和 spark 组件。
+>!tensorflowonspark 依赖的组件包含 hive 和 spark，在 tensorflowonspark 的同时也需要安装 hive 和 spark 组件。
  
 ## 使用示例
-在安装好的 tensorflowonspark 组件目录下，已经有完整的 example 代码，可以按如下操作步骤：
+在安装好的 tensorflowonspark 组件目录下，已经有完整的 example 代码，**本文以  tensorflowonspark 1.4.4**，可以按如下操作步骤：
 - 下载测试数据
-使用 hadoop 用户，在`/usr/local/service/tensorflowonspark`目录下，执行命令：
+使用 hadoop 用户，在 /usr/local/service/tensorflow-on-spark 目录下，执行命令：
 ```
 sh mnist_download.sh
 cat mnist_download.sh
-mkdir ${HOME}/mnist
-pushd ${HOME}/mnist >/dev/null
-curl -O "http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz"
-curl -O "http://yann.lecun.com/exdb/mnist/train-labels-idx1-ubyte.gz"
-curl -O "http://yann.lecun.com/exdb/mnist/t10k-images-idx3-ubyte.gz"
-curl -O "http://yann.lecun.com/exdb/mnist/t10k-labels-idx1-ubyte.gz"
-zip -r mnist.zip *
-popd >/dev/null
 ```
+![](https://qcloudimg.tencent-cloud.cn/raw/c78226c516846f42c17de20b931ff8a0.png)
 - 上传原始数据和依赖包
 ```
 hdfs dfs -mkdir -p /mnist/tools/

@@ -16,7 +16,7 @@ config.allowsInlineMediaPlayback = YES;
 由于 Android 机器碎片化严重，用系统 WebView 调起系统摄像头完成视频录制可能存在很多兼容性问题，如部分机器出现调不起摄像头、调起摄像头无法录制视频等。因此整理了接入指引。H5 刷脸包括 trtc 和录制模式，合作方需要对这两种模式都做兼容性配置。
 请合作方**务必**按照如下步骤顺序，实现兼容性处理：
 1. 引入工具类
-将 WBH5FaceVerifySDK.java 文件拷贝到项目中。该文件下载地址：`https://share.weiyun.com/1gzWlyKj`（密码请联系对接人获取）。
+将 WBH5FaceVerifySDK.java 文件拷贝到项目中。该文件下载地址：`https://share.weiyun.com/1gzWlyKj`（密码请 [提交工单](https://console.cloud.tencent.com/workorder/category) 获取）。
 2. 申请权限
  - 在 Manifest.xml 文件中增加申请以下权限
 ```
@@ -153,10 +153,35 @@ Override
 1. 注册并创建 uni-app 开发环境。
 uni-app 开发接⼊具体参照 uni 官⽹。
 2.  下载 demo 并根据指引配置插件。
-demo下 载地址：`https://share.weiyun.com/1gzWlyKj`（密码请联系对接人获取）。
+demo下 载地址：`https://share.weiyun.com/1gzWlyKj`（密码请 [提交工单](https://console.cloud.tencent.com/workorder/category) 获取）。
 	- 在 uni-app 工程 nativeplugins 目录下，放置 only android 插件以及插件的配置文件。
-![](https://qcloudimg.tencent-cloud.cn/raw/d26716aaa71de828371857a203ce3c3b.png)
+![](https://qcloudimg.tencent-cloud.cn/raw/b6c46471472e8deeedfd2d0adf3db5f1.png)
 	- 在 uni-app 页面中调用插件方法，实现 H5 刷脸功能。
-![](https://qcloudimg.tencent-cloud.cn/raw/aeb84ddf84f2806cb3e005fa88171fae.png)
-
+```
+const h5FaceVerifyPlugin  = uni.requireNativePlugin('DC-WBH5FaceVerifyService');
+        export default {
+                methods: {
+                        enterH5FaceVerify() {
+                                let url="https://kyc.qcloud.com/s/web/h5/#/entry";//拉起h5刷脸的url
+                                let thirdurl="https://www.qq.com/";//h5刷脸完成后要跳转的接入方的url，这个接入方填写自己的url
+                                h5FaceVerifyPlugin.startH5FaceVerify({h5faceurl:url,
+                                h5thirdurl:thirdurl},result => {
+                                        console.log(result,"H5刷脸后跳转到thirdurl所在h5页面的回调");
+                                        h5FaceVerifyPlugin.destroyH5Activity(null);//调用关闭插件的webView.
+                                        //uniapp todo 接入方自己的逻辑
+                                        
+                                },result=>{
+                                        //这里是终端接受h5页面的消息回调。uniapp与h5页面两者通信可通过这个回调作为中间桥接实现。
+                                        //注意：约定h5页面和webView通信通过JavaScriptInterface接口和JavaScript进行交互。
+                                        //在H5页面中使用window.tencentApi.postMessage的方式来调用这个方法，参数为String类型。
+                                        //如果是jsonobject需要转String
+                                        console.log(result,"自定义回调");
+                                        //uniapp todo 接入方自己的逻辑
+                                });
+                                console.log("click=======意愿性刷脸====>startH5FaceVerify");
+                        }
+                }
+        }
+```
+>! 调用 destroyH5Activity() 可主动关闭插件。
 

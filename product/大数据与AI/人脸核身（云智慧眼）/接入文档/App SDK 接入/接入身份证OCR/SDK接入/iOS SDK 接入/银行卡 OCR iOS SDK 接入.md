@@ -6,7 +6,7 @@
 SDK 支持 cocoapods 和手动两种方式集成。
 
 #### 1.1 SDK pod 集成
-如果您的项目已经支持 cocopods ，可以使用本方式集成 SDK，本示例使用的 cocoapods 为 1.7.2。
+如果您的项目已经支持 cocoapods ，可以使用本方式集成 SDK，本示例使用的 cocoapods 为 1.7.2。
 下载的 OCR SDK 文件夹目录结构如下：
 ```
 ├── OCR_private_pod
@@ -167,7 +167,7 @@ init SDK 接口如下：
 ```
 /// 标准版本 SDK 登录接口, 这个接口完成 SDK 登录
 /// @param sdkType     本次识别的卡证类型,详细参考 `WBOCRCardType`
-/// @param appId       人脸核身控制台内申请的 wbappid
+/// @param appId       人脸核身控制台内申请的 WBappid
 /// @param nonce       每次请求需要的一次性nonce，一次有效
 /// @param userId      每个用户唯一的标识
 /// @param sign        签名信息，由接入方后台提供，一次有效

@@ -6,7 +6,7 @@
 SDK 支持 cocoapods 和手动两种方式集成。
 
 #### 1.1 SDK pod 集成
-如果您的项目已经支持 cocopods ，可以使用本方式集成 SDK，本示例使用的 cocoapods 版本号为 1.7.2。
+如果您的项目已经支持 cocoapods ，可以使用本方式集成 SDK，本示例使用的 cocoapods 版本号为 1.7.2。
 下载的 OCR SDK 文件夹目录结构如下：
 ```
 ├── OCR_private_pod
@@ -52,7 +52,7 @@ WebKit.framework
 libc++.tbd
 ```
 
--	Build Setting --> Linking --> Other Linker Flag 设置 增加 -ObjC 和 -lz linker flag
+-   Build Setting --> Linking --> Other Linker Flag 设置 增加 -ObjC 和 -lz linker flag
 
 ### 2. 集成过程中注意事项
  **cocoapods 集成时 `:path` 参数说明**
@@ -168,7 +168,7 @@ init SDK 接口如下：
 ```
 /// 标准版本 SDK 登录接口, 这个接口完成 SDK 登录
 /// @param sdkType     本次识别的卡证类型,详细参考 `WBOCRCardType`
-/// @param appId       人脸核身控制台内申请的 wbappid
+/// @param appId       人脸核身控制台内申请的 WBappid
 /// @param nonce       每次请求需要的一次性nonce，一次有效
 /// @param userId      每个用户唯一的标识
 /// @param sign        签名信息，由接入方后台提供，一次有效
@@ -228,7 +228,8 @@ NSError *error = [NSError errorWithDomain:@"com.ocr.error" code:200101 userInfo:
 |100103 | 无相机权限 | -|
 |200101 | 用户取消操作 | 用户主动退出操作|
 |200102 | 识别超时 | 用户在身份证正反面识别过程中超过设定的阈值（20S）无法识别，提示超时|
-
+|300101 |不合法请求(300102)    |检查传入参数是否正确|
+|300102  |网络出小差啦   |更换网络环境|
 
 ### 多重告警码描述
 在 OCR SDK 2.2.0版本，引入了多重告警码：

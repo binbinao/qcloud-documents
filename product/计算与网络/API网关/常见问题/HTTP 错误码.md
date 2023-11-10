@@ -34,8 +34,9 @@
 | 403    | header xxx is required.                                       | 实际请求缺少 header xxx。                                       |
 | 403    | path variable xxx is required.                                | 配置了路径变量`{xxx}`，但是与实际请求的路径不能匹配。           |
 | 403    | querystring xxx is required.                                  | 实际请求缺少 querystring xxx。                                  |
-| 403    | req content type need application/x-www-form-urlencoded.      | 配置了 body 参数的请求必须是表单格式。                           |
+| 403    | req content type need application/x-www-form-urlencoded.      | 配置了 body 参数的请求必须是表单格式。     |
 | 403    | body param xxx is required.                                   | 实际请求缺少 body 参数 xxx。                                     |
+| 403    | Found no validate apiapp.                                   | 当前 API 没有绑定的应用认证密钥。                                     |
 | 404    | Not found micro service with key.                             | 没有找到对应的微服务。                                         |
 | 404    | Not Found Host.                                               | 请求携带 host 字段，该字段值需要填服务器的域名，且为 String 类型。  |
 | 404    | Get Host Fail.                                                | 请求中携带的 host 字段值不是 String 类型。                       |
@@ -63,7 +64,7 @@
 | 481    | Oauth found no oauth config.                                  | 没有找到 Oauth 配置。                                            |
 | 481    | Oauth found no public key.                                    | 没有找到公钥。                                                 |
 | 481    | Mock config error.                                            | mock 的配置出错。                                               |
-| 499    | Client closed connetion.                                      | 客户端主动中断连接。                                           |
+| 499    | Client closed connection.                                      | 客户端主动中断连接。                                           |
 
 **后台错误**：
 
@@ -73,4 +74,3 @@
 | 500    | Internal Server Error.                                        | 1. 其他 APIGW 内部逻辑错误。<br>2. 若 API 为 proxy 类型，访问了没有权限访问的后端地址也会报该错误。 |
 | 502    | Bad Gateway.                                                  | 连接后端服务出错，可能情况：<br>1. 后端拒绝服务，全部请求都为502。 <br>2. 后端高负载，导致部分请求响应为502。 |
 | 504    | Gateway Time-out.                                             | 后端服务器连接超时。                                           |
-

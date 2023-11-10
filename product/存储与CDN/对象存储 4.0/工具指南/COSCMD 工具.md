@@ -18,7 +18,7 @@
 
 - Python 2.7/3.5/3.6/3.9。
 - 最新版本的 pip。
->?建议用户直接安装集成了 pip 的最新 Python 版本（例如3.9.0版本）。
+>?建议用户直接安装集成了 pip 的 Python 版本（例如3.9.0版本）。
 
 #### 安装及配置
 
@@ -67,8 +67,6 @@ python setup.py install
 mkdir coscmd-packages
 pip download coscmd -d coscmd-packages
 tar -czvf coscmd-packages.tar.gz coscmd-packages
-
-
 
 # 将安装包拷贝到没有外网的机器后运行如下命令
 tar -xzvf coscmd-packages.tar.gz
@@ -176,7 +174,7 @@ anonymous = False
 
 
 >!
->- 建议用户通过 [临时密钥](https://cloud.tencent.com/document/product/436/14048) 使用工具，通过临时授权的方式进一步提高工具使用的安全性。申请临时密钥时，请遵循 [最小权限指引原则](https://cloud.tencent.com/document/product/436/38618)，防止泄漏目标存储桶或对象之外的资源。
+>- 建议用户通过 [临时密钥](https://cloud.tencent.com/document/product/436/14048) 使用工具，通过临时授权的方式进一步提高工具使用的安全性。申请临时密钥时，请遵循 [最小权限指引原则](https://cloud.tencent.com/document/product/436/38618)，防止泄露目标存储桶或对象之外的资源。
 >- 如果您一定要使用永久密钥，建议遵循 [最小权限指引原则](https://cloud.tencent.com/document/product/436/38618) 对永久密钥的权限范围进行限制。
 
 
@@ -189,11 +187,11 @@ coscmd config [OPTION]...<FILE>...
 			  [-s] <SECRET_KEY>
 			  [-t] <TOKEN>
 			  [-b] <BucketName-APPID>
-              [-r] <REGION> | [-e] <ENDPOINT>
-              [-m] <MAX_THREAD>
-              [-p] <PART_SIZE>
-              [--do-not-use-ssl]
-              [--anonymous]   
+			  [-r] <REGION> | [-e] <ENDPOINT>
+			  [-m] <MAX_THREAD>
+			  [-p] <PART_SIZE>
+			  [--do-not-use-ssl]
+			  [--anonymous]   
 ```
 
 >? 其中 "[]" 中的字段为选项， "<>" 的字段为需要填写的参数。
@@ -209,8 +207,8 @@ coscmd config [OPTION]...<FILE>...
 | -b               | 指定的存储桶名称，存储桶的命名格式为 BucketName-APPID，请参见 [命名规范](https://cloud.tencent.com/document/product/436/13312#.E5.AD.98.E5.82.A8.E6.A1.B6.E5.91.BD.E5.90.8D.E8.A7.84.E8.8C.83) 。初次配置使用时，您需要在 COS 控制台创建一个存储桶，用于配置工具 | 字符串 | 是       |
 | -r               | 存储桶所在地域，请参见 [地域和访问域名](https://cloud.tencent.com/doc/product/436/6224) | 字符串 | 是       |
 | -e               | 设置请求的  ENDPOINT，设置 ENDPOINT 参数后，REGION 参数会失效。当您使用的是默认域名，则此处配置格式为 `cos.<region>.myqcloud.com`；当您使用全球加速域名，则配置为 `cos.accelerate.myqcloud.com` | 字符串 | 否       |
-| -m               | 多线程操作的最大线程数（默认为5，范围为1  - 30）             | 数字   | 否       |
-| -p               | 分块操作的单块大小（单位MB，默认为1MB，范围为1  - 1000）     | 数字   | 否       |
+| -m               | 多线程操作的最大线程数（默认为5，范围为1  - 30）。如果上传文件缓慢，可适当调高该值。线程数取决于机器性能，通常情况下设置为30，即可跑满带宽。例如将并发线程调整为30，执行命令为 `coscmd config -m 30`。            | 数字   | 否       |
+| -p               | 分块操作的单块大小（单位MB，默认为1MB，范围为1  - 1000）。如果上传文件缓慢，可适当调高该值。     | 数字   | 否       |
 | --do-not-use-ssl | 使用 HTTP  协议，而不使用 HTTPS                              | 字符串 | 否       |
 | --anonymous      | 匿名操作（不携带签名）                                       | 字符串 | 否       |
 
@@ -524,7 +522,7 @@ coscmd download -rs / D:/examplefolder --ignore "*.txt"
 ```
 >! 
 > - 在上传文件夹时，使用 `--ignore` 参数可以忽略某一类文件，使用 `--include` 参数可以过滤某一类文件，支持 shell 通配规则，支持多条规则，用逗号 `,` 分隔。当忽略一类后缀时，必须最后要输入 `,` 或者加入 `""`。如果 `""` 中包含多条逗号分隔的规则，以第一条规则为准。
-> - 如果您希望使用 `--ignore` 过滤特定目内的所有文件，需要使用绝对路径，并在路径前后加入 `""`。例如 `coscmd upload -rs D:/doc / --ignore "D:/doc/ignore_folder/*"`。
+> - 如果您希望使用 `--ignore` 过滤特定目录内的所有文件，需要使用绝对路径，并在路径前后加入 `""`。例如 `coscmd upload -rs D:/doc / --ignore "D:/doc/ignore_folder/*"`。
 >
 - 操作示例 - 过滤 .txt 和 .doc 的后缀文件
 ```plaintext

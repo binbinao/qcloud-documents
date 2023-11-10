@@ -1,4 +1,4 @@
-本文指导您通过专线接入 + 私有 NAT 网关的 SNAT 和 DNAT 功能，实现本地数据中心 IDC（Internet Data Center）与云上地址做资源访问。
+本文指导您通过专线接入 + 私有 NAT 网关的 SNAT 和 DNAT 功能，实现本地数据中心 IDC（Internet Data Center）与云上地址的资源访问。
 >?
 >- NAT 型专线网关 V3R2 版本目前处于内测中，如有需要，请联系 [在线支持](https://cloud.tencent.com/online-service?from=sales&source=PRESALE)。
 >- 私网 NAT 网关功能目前处于内测中，如有需要，请联系 [在线支持](https://cloud.tencent.com/online-service?from=sales&source=PRESALE)。
@@ -6,8 +6,7 @@
 
 ## 业务场景
 用户使用专线打通腾讯云和客户 IDC 实现资源访问，同时期望指定访问 IP 地址并无 IP 冲突，可以通过私网 NAT + 专线方案来实现。
-![](https://qcloudimg.tencent-cloud.cn/raw/81eafce1f3db0e521f3a43d75256204a.png)
-
+![](https://qcloudimg.tencent-cloud.cn/raw/eed46c83d8dcb6747d2a2bc26f85168c.png)
 
 ## 前提条件
 - 已完成物理专线建设，详情可参见 [申请接入物理专线](https://cloud.tencent.com/document/product/216/48586)。
@@ -15,7 +14,7 @@
 
 ## 注意事项
 - 私网 NAT 网关需要配置网络地址映射关系，不配业务将不通。
-- 在私网 NAT 中配置的 SNAT 本端三层、SNAT 本端四层和 DNAT 对端四层会自动产生映射关系；对端三层不会产生 NAT 映射关系。同时由于默认不发布 VPC CIDR，因此不能单独配置对端三层使用，需要与本端搭配使用。
+- 在私网 NAT 中配置的 SNAT 本端三层、SNAT 本端四层和 DNAT 对端四层会自动产生映射关系；对端三层不会产生 NAT 映射关系。同时由于默认不发布 VPC CIDR，因此如果单独使用对端三层规则，需要在 IDC 侧手动配置 VPC CIDR 路由才能通，推荐和本端搭配使用。
 
 ## 操作步骤
 ### 步骤一：创建私网 NAT 网关[](id:step1)
@@ -44,7 +43,7 @@
 1. 登录 [NAT 网关控制台](https://console.cloud.tencent.com/vpc/nat?rid=1)，在左侧导航栏选择私网 NAT 网关，单击已创建私网 NAT 网关 ID。
 2. 在**私网 NAT 网关详情**页面，在 **SNAT** 和 **DNAT** 页签配置 SNAT 和 DNAT 规则，本例以 SNAT 为例。
 ![](https://qcloudimg.tencent-cloud.cn/raw/9d532a6c65e50eb32963e3ad07141d6c.png)
-3. 在 SNAT 页签，单击**新建**，在**添加SNAT 规则**页面**映射类型**选择**三层**，原 IP 配置为云上 IP，**映射 IP/映射 IP 池**选择您需要指定的 IP 地址或者 IP 池。
+3. 在 SNAT 页签，单击**新建**，在**添加 SNAT 规则**页面**映射类型**选择**三层**，原 IP 配置为云上 IP，**映射 IP/映射 IP 池**选择您需要指定的 IP 地址或者 IP 池。
 ![](https://qcloudimg.tencent-cloud.cn/raw/3bed158a74652637fb0de397888e27de.png)
 如果一次需要配置多条 SNAT 规则，可单击**新增一行**进行添加。
 4. 单击**确定**。
@@ -55,7 +54,7 @@
 1. 登录 [路由表控制台](https://console.cloud.tencent.com/vpc/route?rid=1)。
 2. 在**路由表**页面找到您 VPC 对应的路由表，进入路由表详情页面。
 ![](https://qcloudimg.tencent-cloud.cn/raw/ca39e93e4bbe5460e83b431752627ecf.png)
-3. 单击新增路由策略并进行路由策略配置。
+3. 单击**新增路由策略**并进行路由策略配置。
 **目的端**为您本地 IDC 网段，**下一跳类型**为**私网 NAT 网关**，**下一条**为 [步骤一](#step1) 创建的私网 NAT 网关。
 ![](https://qcloudimg.tencent-cloud.cn/raw/e82b1ab022bc7a5379cd2cfe4410c1c8.png)
 >?更多私有网络策略，请参考 [管理路由策略](https://cloud.tencent.com/document/product/215/53587)。

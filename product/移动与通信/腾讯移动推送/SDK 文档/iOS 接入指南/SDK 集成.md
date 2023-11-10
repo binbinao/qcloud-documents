@@ -3,7 +3,7 @@
 
 >! 为了避免您的 App 被监管部门通报或下架，请您在接入 SDK 之前务必按照 [iOS 合规指南](https://cloud.tencent.com/document/product/548/57362) 在《隐私政策》中增加移动推送相关说明，并且在用户同意《隐私政策》后再初始化移动推送SDK。
 >
-
+ 
 ## SDK 组成
 - doc 文件夹：腾讯移动推送 iOS SDK 开发指南。
 - demo 文件夹：包含样例工程，腾讯移动推送SDK（仅包含 OC demo，Swift Demo 请前往 [腾讯工蜂](https://git.code.tencent.com/tpns/XG-Demo-Swift) 进行下载）。 
@@ -187,12 +187,12 @@ SDK 提供了 Service Extension 接口，可供客户端调用，从而可以使
 >!在推送单个目标设备时请使用 TPNS 36位的 Token。
 
 ## 统一接收消息及点击消息回调说明
-移动推送自建通道及 APNs 通道统一接收消息回调，当应用在前台收到通知消息，以及所有状态（前台、后台、关闭）下收到静默消息会走此回调。
+当应用在前台收到通知消息，以及所有状态（前台、后台、关闭）下收到静默消息会走此回调。
 ```objective-c
 - (void)xgPushDidReceiveRemoteNotification:(nonnull id)notification withCompletionHandler:(nullable void (^)(NSUInteger))completionHandler;
 ```
 >?
-- 当您前台收到通知时默认是不弹横幅的，如需展示请参考如下代码：
+- 当您前台收到通知时默认不弹横幅，通知中心不会展示的，如需展示请参考如下代码：
 ```
 if ([notification isKindOfClass:[UNNotification class]]) {
    completionHandler(UNNotificationPresentationOptionBadge | UNNotificationPresentationOptionSound | UNNotificationPresentationOptionAlert);
@@ -222,7 +222,7 @@ if (msgType.integerValue == 1) {
 
 >!
 >-移动推送统一消息回调 `xgPushDidReceiveRemoteNotification` 会处理消息接收，并自动后续调用 `application:didReceiveRemoteNotification:fetchCompletionHandler` 方法。然而，该方法也可能被其他 SDK 也进行 hook 调用。
-- 如果您只集成了移动推送推送平台，我们不推荐再去实现系统通知回调方法，请统一在移动推送通知回调中进行处理。
+- 如果您只集成了移动推送平台，我们不推荐再去实现系统通知回调方法，请统一在移动推送通知回调中进行处理。
 - 如果您集成了多推送平台，并且需要在 `application:didReceiveRemoteNotification:fetchCompletionHandler` 方法处理其他推送平台的业务，请参照如下指引，避免业务重复：
  - 您需要区分平台消息，在两个消息回调方法中分别拿到消息字典后通过“xg”字段来区分是否是移动推送平台的消息，如果是移动推送的消息则在 `xgPushDidReceiveRemoteNotification` 方法进行处理，非移动推送消息请统一在 `application:didReceiveRemoteNotification:fetchCompletionHandler` 方法处理
  - `xgPushDidReceiveRemoteNotification` 和 `application:didReceiveRemoteNotification:fetchCompletionHandler` 如果都执行，总共只需要调用一次 `completionHandler`。如果其他 SDK 也调用 `completionHandler`，确保整体的 `completionHandler` 只调用一次。这样可以防止由于多次 `completionHandler` 而引起的 crash。

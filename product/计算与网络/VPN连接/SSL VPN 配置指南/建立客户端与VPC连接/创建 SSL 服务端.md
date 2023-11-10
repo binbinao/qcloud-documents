@@ -5,6 +5,8 @@ SSL VPN 网关创建完成后，需要在腾讯云侧创建 SSL 服务端，为�
 2. 在左侧目录中单击 **VPN 连接** > **SSL 服务端**，进入管理页面。
 3. 在 SSL 服务端管理页面，单击**+新建**。
 4. 在弹出的**新建 SSL 服务端**对话框中，配置如下参数。
+>?在 Windows 系统下，如果您的客户端 OpenVPN 是3.4.0及以上版本，那么 SSL 服务端配置时需要配置加密和认证算法，其中认证算法仅支持 SHA1。
+>
 <img src="https://qcloudimg.tencent-cloud.cn/raw/86217ecf4ec1852d324677893d8793b9.png" width="70%"> 
 <table>
 <tr>
@@ -24,7 +26,7 @@ SSL VPN 网关创建完成后，需要在腾讯云侧创建 SSL 服务端，为�
 <td>选择创建好的 SSL VPN 网关。</td>
 </tr>
 <tr>
-<td>本端网段</td>
+<td>云端网段</td>
 <td>客户移动端访问的云上网段，即您 VPC 所在的网段。</td>
 </tr>
 <tr>

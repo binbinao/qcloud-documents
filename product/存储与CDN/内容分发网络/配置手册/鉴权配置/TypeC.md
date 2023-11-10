@@ -4,7 +4,13 @@
 
 -  **访问 URL 格式**
 `http://DomainName/md5hash/timestamp/FileName` 
->!访问 URL 中不能包含中文。
+
+>!
+>- 访问 URL 中不能包含中文。
+>- 不支持带参数 URL 鉴权。
+>- 有效时间最大可输入630720000s。
+
+
 -  **鉴权字段说明**
 <table>
 <thead>
@@ -43,7 +49,7 @@ CDN 服务器接受到客户请求后，解析出 url 中的 timestamp 参数 + 
 	- 鉴权密钥：dimtm5evg50ijsx2hvuwyfoiu65
 	- 鉴权URL有效时长为：1s   
 	<img src="https://qcloudimg.tencent-cloud.cn/raw/278121913d9946fa12d078db93d0b6ac.png" width="60%">
-	- 签算服务器生成鉴权URL的时间：2020年02月27日16:10:32（UTC+8），转换为十六进制的整形数值为5e577978(timestamp)
+	- 签算服务器生成鉴权 URL 的时间：2020年02月27日16:10:32（UTC+8），以十进制 Unix 时间戳转换为十六进制的整形数值为5e577978(timestamp)。 
 	- 请求源站地址：`http://cloud.tencent.com/test.jpg`
 
 - 生成过程

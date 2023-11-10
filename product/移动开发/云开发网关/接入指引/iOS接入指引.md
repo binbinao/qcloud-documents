@@ -1,30 +1,29 @@
+本指引用于协助指导如何调整 iOS 应用，使得应用的网络请求经过网关进行转发。
 
-<dx-alert infotype="explain" title="">
-SDK 正在内测中，请 [联系我们](https://cloud.tencent.com/online-service) 或 [提交工单](https://console.cloud.tencent.com/workorder/category) 获取 SDK。
-</dx-alert>
+## 接入说明
+iOS 应用，需要使用网关提供的 SDK，实现网络通讯，替换应用原有的网络通讯 SDK 或 API。
 
 ## 操作步骤
-
 ### 步骤1：获取 SDK
-
+[联系我们](https://cloud.tencent.com/document/product/1595/75974) 获取到网关提供的 iOS SDK，并在开发机解压。
 SDK 包括如下：
-
 - WXCloud.h（头文件）
 - libWXCloudCore.a（静态库）
 - WXCloudSample（示例工程）
 
-![](https://qcloudimg.tencent-cloud.cn/raw/32c525b49ab07fc7f59640b5d7661d5a.png)
+<img style="width:500px" src="https://7361-saas-imgbox-9gbntzkl1ad561d5-1258016615.tcb.qcloud.la/demand/c462c81061b0a08e013285e539b22ff8/content/7662-image.png"/>
 
-### 步骤2：添加头文件和静态库
-
-1. 准备好 WXCloud.h、libWXCloudCore.a 和 libz。
-2. SDK 底层依赖系统动态库 libz。
+### 步骤2：添加头文件和静态库:
+在项目中添加静态库及头文件用于网络调用使用。需要添加的内容有 WXCloud.h、libWXCloudCore.a、libz，其中 SDK 底层依赖系统动态库 libz。
 
 ### 步骤3：调用 SDK 及调试
+通过使用添加的动态库和调用类实现网络发送，按如下代码实例实现网络请求调用。
+其中参数说明如下：
+- appKeyId，appKey：通过联系我们获取或更新。
+- HOST：业务自定义 HOST 名，需要和网关的路由配置中的域名对应，用于网关路由转发匹配。
 
-调用代码如下：
-<dx-codeblock>
-:::  java
+
+```java
 // 包含头文件
 #import "WXCloud.h"
 
@@ -62,12 +61,11 @@ wxCloud.callContainer(httpMethod, path.UTF8String,
     }
         printf("\nbody: %s\n", body.c_str());
 });
-:::
-</dx-codeblock>
+
+```
+测试执行返回 ret=0 且 http_code=200 的情况下，表示调用成功。另外，也可以自行参见 WXCloudSample 接入。
 
 
-执行返回 ret=0 且 http_code=200 表示调用成功。至此，已经成功接入 SDK，也可以自行参见 WXCloudSample 接入。
-
-## 相关说明
-
-**静态库冲突：** SDK 集成了 libcurl、libcrypto、libssl 和 libnghttp2，如果宿主工程也用了相同的库，可能会导致静态库冲突，可 [联系我们](https://cloud.tencent.com/online-service) 进行处理。
+## 常见问题
+### 静态库冲突怎么处理？
+SDK 集成了 libcurl、libcrypto、libssl 和 libnghttp2，如果宿主工程也用了相同的库，可能会导致静态库冲突，可联系云开发进行处理。

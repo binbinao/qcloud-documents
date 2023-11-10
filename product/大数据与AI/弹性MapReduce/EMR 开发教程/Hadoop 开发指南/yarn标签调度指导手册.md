@@ -1,9 +1,9 @@
 ## 功能介绍
 Spark on Yarn 使用 Yarn 作为资源调度器，在 Hadoop2.7.2 之后 Yarn 在容器调度器 Capacity Scheduler 基础上增加了标签调度。
 
-Capacity Scheduler 是一个多租户资源调度器，其核心思想是 Hadoop 集群中的可用资源由多个组织共享，这些组织根据自己的计算需求共同为集群提供计算能力。Capacity Scheduler 具有分层队列、容量保证、安全性、弹性资源、多租户、基于资源的调度、映射等特性。集群的所有资源全部分配给多个队列，提交到队列的所有应用程序都可以使用分配给队列的资源，其他组织未使用的空闲资源可以非抢占式的分配给运行低于容量的队列上的应用程序，确保应用程序获得资源容量下限的同时能弹性的满足不同应用程序的资源需求。
+Capacity Scheduler 是一个多租户资源调度器，其核心思想是 Hadoop 集群中的可用资源由多个组织共享，这些组织根据自己的计算需求共同为集群提供计算能力。Capacity Scheduler 具有分层队列、容量保证、安全性、弹性资源、多租户、基于资源的调度、映射等特性。集群的所有资源全部分配给多个队列，提交到队列的所有应用程序都可以使用分配给队列的资源，其他组织未使用的空闲资源可以非抢占式地分配给运行低于容量的队列上的应用程序，确保应用程序获得资源容量下限的同时能弹性的满足不同应用程序的资源需求。
 
-Capacity Scheduler 将集群资源粗略的分配给不同的队列，不能指定队列中应用程序的运行位置。标签调度在 Capacity Scheduler 之上通过给集群各节点打上不同的 Node Label 进行更细粒度的资源划分，应用程序可以指定运行的位置。节点标签具有以下特点：
+Capacity Scheduler 将集群资源粗略地分配给不同的队列，不能指定队列中应用程序的运行位置。标签调度在 Capacity Scheduler 之上通过给集群各节点打上不同的 Node Label 进行更细粒度的资源划分，应用程序可以指定运行的位置。节点标签具有以下特点：
 1. 一个节点只有一个节点标签（也即属于一个节点分区），集群按节点分区被划分为多个不相交的子集群。
 2. 根据匹配策略，节点分区具有两种类型：独占和非独占。独占的节点分区将容器分配给完全匹配节点分区的节点；非独占的节点分区将空闲资源共享给请求 default 分区的容器。
 3. 每个队列通过设置可访问的节点标签来指定应用程序运行的节点分区。
@@ -43,7 +43,7 @@ Capacity Scheduler 将集群资源粗略的分配给不同的队列，不能指�
 其他 Capacity Scheduler 配置请查询文档。
 
 ### 3. 设置 ResourceManager 启用 Node Label
-在`conf/yarn-site.xml`中设置。
+在`yarn-site.xml`中设置。
 ```
 <property>
 	<name>yarn.node-labels.fs-store.root-dir</name>
@@ -83,7 +83,7 @@ Capacity Scheduler 将集群资源粗略的分配给不同的队列，不能指�
  - 在集群列表中单击集群实例 ID，进入集群信息页面，然后单击左侧菜单栏**集群服务**，选择 YARN 组件管理中**操作 > 配置管理**。
 ![](https://qcloudimg.tencent-cloud.cn/raw/567906807b0b4e1fe7fb040eebd8dcfb.png)
  - 确认 RM 的 IP 地址。
- - 在 YARN 组件“配置管理”页面，选择**维度范围**为节点维度，选择节点为 RM 的 IP 地址，单击**修改配置**修改 RM 所在节点`yarn-site.xml`的`yarn.resourcemanager.scheduler.class`参数。
+ - 在 YARN 组件“配置管理”页面，选择**维度**为节点维度，选择节点为 RM 的 IP 地址，单击**编辑配置**修改 RM 所在节点`yarn-site.xml`的`yarn.resourcemanager.scheduler.class`参数。
 ![](https://qcloudimg.tencent-cloud.cn/raw/7a5d6887a65e6034e1dc4c11f830a704.png)
 
 ### 在 Capacity-Scheduler.xml 中配置 Node Label 与队列的映射关系和占比

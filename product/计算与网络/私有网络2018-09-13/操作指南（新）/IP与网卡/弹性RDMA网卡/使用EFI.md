@@ -18,7 +18,7 @@ EFI 功能正在邀测中，邀测支持 GPU 计算型 PNV4ne。如需使用，�
 | ------------ | ------------------------------------------------------------ |
 | 地域及可用区 | 支持选择：上海-上海五区                                      |
 | 实例族及类型 | 支持 EFI 的实例规格如下：<br />实例族：GPU 机型<br />类型：GPU 计算型 PNV4ne |
-| 镜像         | 从以下镜像中选择一款镜像：<br />TencentOS Server 3.1(TK4) <br />TencentOS Server 2.4(TK3) |
+| 镜像         | 从以下镜像中选择一款镜像：<br />TencentOS Server 3.1(TK4) <br />TencentOS Server 2.4 |
 
 2. 两种方式创建启用 EFI 的弹性网卡。
 
@@ -81,11 +81,7 @@ EFI 功能正在邀测中，邀测支持 GPU 计算型 PNV4ne。如需使用，�
 
 5. 在实例内安装 EFI 驱动。
 
- i. 运行以下命令，下载驱动安装包。
-
- ```plaintext
-wget http://mirrors.tencentyun.com/install/cvm/efi/vrdma_bundle.tgz
- ```
+ i. 下载驱动安装包，请联系您的商务经理以获取最新版本。
 
  ii. 运行以下命令，解压安装包并进入文件目录。
 

@@ -12,7 +12,7 @@
 2. 在实例列表中单击您的 CVM ID，在详细信息页面，选择**弹性网卡**。
 ![](https://main.qcloudimg.com/raw/1e9965343cd6e71b2b48a6f27e01f5b6.png)
 3. 在“弹性网卡”页面，单击主网卡右侧的**分配内网 IP**。
-4. 在弹出的“分配内网IP”窗口中，选择自动分配或手动填写要分配的内网 IP ，若需分配多个内网 IP，请单击**新增**并填写要分配的内网 IP，完成后单击**确定**。
+4. 在弹出的“分配内网 IP”窗口中，选择自动分配或手动填写要分配的内网 IP ，若需分配多个内网 IP，请单击**新增**并填写要分配的内网 IP，完成后单击**确定**。
 >?若选择手动填写要分配的内网 IP，请确认填写的内网 IP 在所属子网网段内，且不属于系统保留 IP。
 >例如，所属子网网段为：`10.0.0.0/24`，则可填的内网 IP 范围 为：`10.0.0.2 - 10.0.0.254`，本次操作以手动填写 `10.0.0.3` 为例。
 >
@@ -62,7 +62,8 @@ cp /etc/sysconfig/network-scripts/ifcfg-eth0{,.bak}
 ```
 vim /etc/sysconfig/network-scripts/ifcfg-eth0
 ```
-8. 按 **i** 切换至编辑模式，把配置文件内容修改为：
+8. 配置文件修改：
+  - CentOS 7系列机型，按 i 切换至编辑模式，把配置文件内容修改为：
 ```
 # Created by cloud-init on instance boot automatically, do not edit.
 #
@@ -98,10 +99,50 @@ USERCTL=no
 ```
  修改后，示例如下：
 ![](https://main.qcloudimg.com/raw/bbc5a78eab53c430eb3e0edcc04287aa.png)
+  - CentOS 8及以上系列机型，按 i 切换至编辑模式，把配置文件内容修改为：
+```
+TYPE=Ethernet
+PROXY_METHOD=none
+BROWSER_ONLY=no
+BOOTPROTO=dhcp
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=no
+IPV6INIT=yes
+IPV6_AUTOCONF=yes
+IPV6_DEFROUTE=yes
+IPV6_FAILURE_FATAL=no
+NAME=eth0
+DEVICE=eth0
+ONBOOT=yes
+# 配置主ip
+IPADDR0=10.0.0.10 # 步骤一：绑定 EIP 中查看到的主IP，请根据实际填写
+NETMASK0=255.255.255.0 # 步骤3中所记录的子网掩码，请根据实际填写
+# 配置辅助ip1
+IPADDR1=10.0.0.11 # 步骤一：绑定 EIP 中手动填写的辅助IP，请根据实际填写
+NETMASK1=255.255.255.0
+# 如果您有多个辅助ip，请继续配置辅助ip2，辅助ip3...
+#IPADDR2=10.0.0.12
+#NETMASK2=255.255.255.0
+#IPADDR3=10.0.0.13
+#NETMASK3=255.255.255.0
+#......
+# 配置网关
+GATEWAY=10.0.0.1 # 步骤3中所记录的网关，请根据实际填写
+```
 9. 完成修改后，按 **Esc**，输入 **:wq!** 并回车，保存配置并返回。
-10. 执行如下命令，重启网络服务。
+10. 重启网络服务。
+  - CentOS 7系列机型，执行如下命令，重启网络服务：
 ```
 systemctl restart network.service
+```
+  - CentOS 8及以上系列机型，执行如下命令，重启网卡：
+```
+#重新加载配置
+nmcli connection reload
+#重启网卡
+nmcli connection down eth0 && nmcli connection up eth0  
+#重新连接网卡eth0
+nmcli device reapply eth0
 ```
 11. 执行如下命令，查看 IP。
 ```

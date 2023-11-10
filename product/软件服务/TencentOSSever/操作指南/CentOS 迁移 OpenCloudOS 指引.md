@@ -35,7 +35,7 @@ CentOS 官方已停止维护 CentOS 8，具体情况如下表所示。如需了�
 ## 操作步骤
 [](id:Prepare)
 ### 迁移准备
-1. 迁移操作不可逆，为保障业务数据安全，建议您在执行迁移前备份数据,腾讯云服务器用户可参见 [创建快照](https://cloud.tencent.com/document/product/362/5755) 备份系统盘数据。
+1. 迁移操作不可逆，为保障业务数据安全，建议您在执行迁移前备份数据，腾讯云服务器用户可参见 [创建快照](https://cloud.tencent.com/document/product/362/5755) 备份系统盘数据。
 2. 检查并手动卸载 i686 的 rpm 包。
 3. 如果您环境里边没有安装 Python 3，需要先进行安装 Python 3操作，可以借助 vault 源进行安装。
 ```plaintexy
@@ -68,7 +68,7 @@ wget https://mirrors.opencloudos.tech/opencloudos/8.6/AppStream/x86_64/os/Packag
 #arm版本
 wget https://mirrors.opencloudos.tech/opencloudos/8/AppStream/aarch64/os/Packages/migrate2opencloudos-1.0-1.oc8.noarch.rpm 
 ```
-4. 执行以下命令安装迁移工具,该命令会在 /usr/sbin下创建 migrate2opencloudos.py。
+4. 执行以下命令安装迁移工具，该命令会在 /usr/sbin下创建 migrate2opencloudos.py。
 ```plaintexy
 rpm -ivh migrate2opencloudos-1.0-1.oc8.noarch.rpm
 ```

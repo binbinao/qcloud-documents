@@ -3,10 +3,10 @@
 
 ## 开发准备
 - 因为任务中需要访问腾讯云消息队列 CKafka，所以需要先创建一个 CKafka 实例，具体见 [消息队列 CKafka](https://cloud.tencent.com/document/product/597)。
-- 确认您已开通腾讯云，且已创建一个 EMR 集群。创建 EMR 集群时，需要在软件配置界面选择 Spark 组件。
+- 确认您已开通腾讯云，且已创建一个 EMR 集群。创建 EMR 集群时，需要在软件配置界面选择 Flume 组件。
 
 ## 在 EMR 集群使用 Kafka 工具包
-首先需要查看 CKafka 的内网 IP 与端口号。登录消息队列 CKafka 的控制台，选择您要使用的 CKafka 实例，在基本消息中查看其内网 IP 为 $kafkaIP，而端口号一般默认为9092。在 topic 管理界面新建一个 topic 为 kafka_test。
+首先需要查看 CKafka 的内网 IP 与端口号。登录消息队列 CKafka 的控制台，选择您要使用的 CKafka 实例，在**基本信息**中查看其内网 IP 为 $kafkaIP，而端口号一般默认为9092。在 topic 管理界面新建一个 topic 为 kafka_test。
 
 ## 配置 flume
 1. 创建 flume 的配置文件`hive_kafka.properties`
@@ -54,7 +54,7 @@ grep "hive.metastore.uris" -C 2 /usr/local/service/hive/conf/hive-site.xml
 2. 创建 hive 表
 ```
 create table weblogs ( id int , msg string )
-partitioned by (continent string, country string, time string)
+partitioned by (continent string, country string, `time` string)
 clustered by (id) into 5 buckets
 stored as orc TBLPROPERTIES ('transactional'='true');
 ```

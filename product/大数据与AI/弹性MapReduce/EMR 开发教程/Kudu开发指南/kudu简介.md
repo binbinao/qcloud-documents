@@ -19,48 +19,44 @@ Apache Kudu 是一个分布式，可水平扩展的列式存储系统，它完�
 ## Kudu 基本架构
 Kudu 包含如下两种类型的组件：
 - master 主要负责管理元数据信息、监听 server，当 server 宕机后负责 tablet 的重分配。
-- tserver 主要负责 tablet 的存储与和数据的增删改查。
+- tserver 主要负责 tablet 的存储与数据的增删改查。
 
 ![](https://main.qcloudimg.com/raw/fb48d41fecde3f4ca1c2202170f5cbe2.png)
 
 
 ## Kudu 使用
 EMR-2.4.0版本以上支持了 Kudu 组件。在创建 Hadoop 集群时勾选 Kudu 组件，即会创建 Kudu 集群。默认情况下 Kudu 集群包含3个 Kudu Master 服务并开启 HA。 
->?以下所用到的 IP 为内网 IP。
+>? 以下 Kudumaster_ip1、Kudumaster_ip2、Kudumaster_ip3 所用到的 IP 为 KuduMastaer 角色所在节点内网 IP。
 >
 - Impala 与 Kudu 集成
+参考 [Impala 简介](https://cloud.tencent.com/document/product/589/42992#.E8.BF.9E.E6.8E.A5-impala) 内容进入到 Impala 命令行，执行以下命令新建表格：
 ```
-[172.30.0.98:27001] > CREATE TABLE t2(id BIGINT,name STRING,PRIMARY KEY(id))PARTITION BY HASH PARTITIONS 2 STORED AS KUDU TBLPROPERTIES (
-'kudu.master_addresses' = '172.30.0.240,172.30.1.167,172.30.0.96,172.30.0.94,172.30.0.214',
+CREATE TABLE t2(id BIGINT,name STRING,PRIMARY KEY(id))PARTITION BY HASH PARTITIONS 2 STORED AS KUDU TBLPROPERTIES (
+'kudu.master_addresses' = '$Kudumaster_ip1,$Kudumaster_ip2,$Kudumaster_ip3',
 'kudu.num_tablet_replicas' = '1');
+```
+成功后返回以下提示信息：
+```
 Query: create TABLE t2 (id BIGINT,name STRING,PRIMARY KEY(id)) PARTITION BY HASH PARTITIONS 2 STORED AS KUDU TBLPROPERTIES (
-'kudu.master_addresses' = '172.30.0.240,172.30.1.167,172.30.0.96,172.30.0.94,172.30.0.214',
+'kudu.master_addresses' = '$Kudumaster_ip1,$Kudumaster_ip2,$Kudumaster_ip3',
 'kudu.num_tablet_replicas' = '1')
 Fetched 0 row(s) in 0.12s
-[hadoop@172 root]$ /usr/local/service/kudu/bin/kudu table list  172.30.0.240,172.30.1.167,172.30.0.96,172.30.0.94,172.30.0.214
-impala::default.t2
+```
+输入以下命令可查看已创建表格：
+```
+usr/local/service/kudu/bin/kudu table list $Kudumaster_ip1,$Kudumaster_ip2,$Kudumaster_ip3
 ```
 - 数据插入
+在 Impala 命令行，执行以下命令向表中插入数据：
 ```
-[172.30.0.98:27001] > insert into t2 values(1, 'test');
-Query: insert into t2 values(1, 'test')
-Query submitted at: 2020-08-10 20:07:21 (Coordinator: http://172.30.0.98:27004)
-Query progress can be monitored at: http://172.30.0.98:27004/query_plan?query_id=b44fe203ce01254d:b055e98200000000
-Modified 1 row(s), 0 row error(s) in 5.63s
+insert into t2 values(1, 'test');
 ```
 - 基于 Impala  查询数据
+在 Impala 命令行，执行以下命令查询表中数据：
 ```
 [172.30.0.98:27001] > select * from t2;
-Query: select * from t2
-Query submitted at: 2020-08-10 20:09:47 (Coordinator: http://172.30.0.98:27004)
-Query progress can be monitored at: http://172.30.0.98:27004/query_plan?query_id=ec4c9706368f135d:f20ccb6e00000000
-+----+------+
-| id | name |
-+----+------+
-| 1  | test |
-+----+------+
-Fetched 1 row(s) in 0.20s
 ```
+可查询到表中已插入数据
 - 其他命令
  - 集群健康检测
 ```

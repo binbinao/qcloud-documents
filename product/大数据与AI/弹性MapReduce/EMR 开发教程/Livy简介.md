@@ -1,4 +1,4 @@
-Apache Livy 是一个可以通过 REST 接口与 Spark 集群进行交互的服务，它可以提交 Spark 作业或者 Spark 代码片段，同步或者异步的进行结果检索以及 Spark Context 上下文管理，Apache Livy 简化 Spark 和应用程序服务器之间的交互，从而使 Spark 能够用于交互式 Web/移动应用程序。
+Apache Livy 是一个可以通过 REST 接口与 Spark 集群进行交互的服务，它可以提交 Spark 作业或者 Spark 代码片段，同步或者异步地进行结果检索以及 Spark Context 上下文管理，Apache Livy 简化 Spark 和应用程序服务器之间的交互，从而使 Spark 能够用于交互式 Web/移动应用程序。
 
 ## Livy 特性
 Livy 还支持如下功能：
@@ -12,7 +12,7 @@ Livy 还支持如下功能：
 
 ## 使用 Livy
 1. 访问`http://IP:8998/ui` 可以进入 Livy 的 UI 页面（**IP 为外网 IP，请自行为安装有 Livy 的机器申请外网 IP，并编辑设置安全组策略来开通对应的端口以进行访问**）。
-2. 创建一个交互式会话。
+2. 创建一个交互式会话。（下述示例代码**以 Linux/Mac OS 为例**）
 ```
 curl -X POST --data '{"kind":"spark"}' -H "Content-Type:application/json" IP:8998/sessions
 ```
@@ -48,7 +48,7 @@ curl -X DELETE IP:8998/sessions/0
 ### Livy 端口修改方法
 目前的默认端口是8998，用户可以自行修改。修改配置文件 `livy.conf` 的 `livy.server.port` 属性即可。
 
-若集群装有 Hue，由于 Hue 与 Livy 之间涉及联通性，因此 Hue 对应的配置端口也需要修改。其对应的配置文件为 `pseudo-distributed.ini`，路径为 `/usr/local/service/hue/desktop/conf`，对应的配置项为 `livy_server_port=8998`。修改后要重启对应的服务。
+若集群装有 Hue，由于 Hue 与 Livy 之间涉及联通性，因此 Hue 对应的配置端口也需要修改。其对应的配置文件为 `pseudo-distributed.ini`，路径为 `/usr/local/service/hue/desktop/conf`，对应的配置项为 `spark_livy_server_port=8998`。修改后要重启对应的服务。
 
 **如非必要，建议不要修改 Livy 的端口，如涉及安全要求，可以通过安全组的方式来进行控制。修改后可能会导致一些其他的潜在问题。**
 

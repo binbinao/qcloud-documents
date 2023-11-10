@@ -1,8 +1,10 @@
 ## 简介
 C++ SDK 提供生成签名和获取请求预签名 URL 接口，详细操作请查看本文说明和示例。
 
+关于使用预签名 URL 上传的说明请参见 [预签名授权上传](https://cloud.tencent.com/document/product/436/14114)， 使用预签名 URL 下载的说明请参见 [预签名授权下载](https://cloud.tencent.com/document/product/436/14116)。
+
 >?
-> - 建议用户使用临时密钥生成预签名，通过临时授权的方式进一步提高预签名上传、下载等请求的安全性。申请临时密钥时，请遵循 [最小权限指引原则](https://cloud.tencent.com/document/product/436/38618)，防止泄漏目标存储桶或对象之外的资源。
+> - 建议用户使用临时密钥生成预签名，通过临时授权的方式进一步提高预签名上传、下载等请求的安全性。申请临时密钥时，请遵循 [最小权限指引原则](https://cloud.tencent.com/document/product/436/38618)，防止泄露目标存储桶或对象之外的资源。
 > - 如果您一定要使用永久密钥来生成预签名，建议永久密钥的权限范围仅限于上传或下载操作，以规避风险。
 >
 
@@ -107,6 +109,7 @@ std::string bucket_name = "examplebucket-1250000000";
 std::string object_name = "exampleobject";
 
 // 添加存储桶名称和对象键，以及 HTTP 请求方法。
+// 注意：用户无需对 object_name 进行编码操作
 qcloud_cos::GeneratePresignedUrlReq req(bucket_name, object_name, qcloud_cos::HTTP_GET);
 std::string presigned_url = cos.GeneratePresignedUrl(req); 
 

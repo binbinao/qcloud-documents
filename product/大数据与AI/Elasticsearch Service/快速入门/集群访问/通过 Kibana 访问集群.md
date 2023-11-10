@@ -9,7 +9,7 @@ Kibana 页面有两个入口，分别位于集群列表页和集群详情页，�
 ![](https://qcloudimg.tencent-cloud.cn/raw/a8eb732f137ad1929733542e096f2ab2.png)
 
 ### 登录
-Kibana 页面访问需要登录，帐号为 elastic，密码为用户创建集群时设置的 Kibana 密码。如果忘记密码，可以在集群详情页重置密码。出于安全考虑，用户可以配置 Kibana 公网地址的访问黑白名单来提高安全防护，详见 [Kibana 访问设置](https://cloud.tencent.com/document/product/845/16992)。
+Kibana 页面访问需要登录，账号为 elastic，密码为用户创建集群时设置的 Kibana 密码。如果忘记密码，可以在集群详情页重置密码。出于安全考虑，用户可以配置 Kibana 公网地址的访问黑白名单来提高安全防护，详见 [Kibana 访问设置](https://cloud.tencent.com/document/product/845/16992)。
 
 - 若“ES 集群用户登录认证”未开启，Kibana 登录页如下图所示：
 ![](https://main.qcloudimg.com/raw/ff820fc88951faed4119bb9edbd8e8d7.png)
@@ -26,13 +26,11 @@ Kibana 页面访问需要登录，帐号为 elastic，密码为用户创建集�
 
 ### 添加索引
 #### 定义索引的 mapping
-索引名称为 china，类型名称为 city，以及详细的字段及类型信息。其中字段 location 的类型是 geo_point，可以表示地理位置信息；level 是对象类型，包含二级字段信息。关于字段类型说明，可查看官方文档 [Field Datatypes](https://www.elastic.co/guide/en/elasticsearch/reference/6.4/mapping-types.html)。
-![](https://main.qcloudimg.com/raw/4ccd6c4f2c5eef0cdc9d25a0819ffcfc.png)
+索引名称为 china，以及详细的字段及类型信息。其中字段 location 的类型是 geo_point，可以表示地理位置信息；level 是对象类型，包含二级字段信息。关于字段类型说明，可查看官方文档 [Field Datatypes](https://www.elastic.co/guide/en/elasticsearch/reference/6.4/mapping-types.html)。
 ```
 PUT china
 {
   "mappings": {
-    "city": {
       "properties":{
         "name":{ "type": "keyword"  }, 
         "province":{ "type": "keyword"  }, 
@@ -48,15 +46,13 @@ PUT china
         "y":{ "type": "integer" },
         "cityNo":{ "type": "integer" } 
       }
-    }
   }
 }
 ```
 
 #### 添加单个文档
-![](https://main.qcloudimg.com/raw/420f7aeec79fde39e3233e7b0e75594d.png)
 ```
-PUT china/city/wuhan 
+PUT china/_doc/wuhan 
 {"name":"武汉市","province":"湖北省江岸区沿江大道188号","location":{"lat":30.5952548577,"lon":114.2999398195},"x":6384,"level":{"level":2,"range":19,"name":"新一线城市"},"y":4231,"cityNo":7}
 ```
 
